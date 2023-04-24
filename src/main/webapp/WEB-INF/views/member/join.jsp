@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,53 +37,50 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="./join" method="post">
+                            
+                            <form:form id="contactForm" data-sb-form-api-token="API_TOKEN" modelAttribute="memberVO" action="./join" method="post">
                                 <!-- userName input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="userName" name="userName" required="required" type="text" placeholder="Enter your userName..." data-sb-validations="required" />
-                                    <label for="userName">user Name</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                                </div>
+                                    <form:input path="userName" cssClass="form-control" id="userName"/>
+                                    <form:label path="userName">user Name</form:label>
+                                    <form:errors path="userName" cssStyle="color:red;"></form:errors>
+                                    </div>
                                 <!-- password input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="password" name="password" type="password" data-sb-validations="required,email" />
-                                    <label for="password">password</label>
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                                </div>
+                                    <form:password path="password" cssClass="form-control" id="password"/>
+                                    <form:label path="password">password</form:label>
+                                    <form:errors path="password" cssStyle="color:red;"></form:errors>
+                                    </div>
                                 <!-- passwordCheck input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="passwordCheck" name="passwordCheck" type="password" data-sb-validations="required,email" />
+                                    <form:password cssClass="form-control" id="passwordCheck" path="passwordCheck"/>
                                     <label for="passwordCheck">passwordCheck</label>
-                                    <div id="passwordCheckResult"></div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                                </div>
+                                    <form:errors path="passwordCheck" cssStyle="color:red;"></form:errors>
                                 <!-- name input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter your userName..." data-sb-validations="required" />
-                                    <label for="name">name</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                                </div>
+                                	<form:input path="name" cssClass="form-control" id="name"/>
+                                    <form:label path="name">name</form:label>
+                                    <form:errors path="name" cssStyle="color:red;"></form:errors>
+                                    </div>
                                 <!-- email input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="email" name="email" type="email" placeholder="Enter your userName..." data-sb-validations="required" />
-                                    <label for="email">Email</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                                </div>
+                                	<form:input path="email" cssClass="form-control" id="email"/>
+                                    <form:label path="email">Email</form:label>
+                                    <form:errors path="email" cssStyle="color:red;"></form:errors>
+                                    </div>
                                 
                                 <!-- birth input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="birth" name="birth" type="date" placeholder="Enter your userName..." data-sb-validations="required" />
+                                	<input class="form-control" id="birth" name="birth" type="date" placeholder="Enter your userName..." data-sb-validations="required" />
                                     <label for="email">Birth</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                    <form:errors path="birth"></form:errors>
                                 </div>
                                 
                                 <input type="hidden" name="roleName" value="ROLE_MEMBER">
                                
                                <!-- Submit Button-->
                                 <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>

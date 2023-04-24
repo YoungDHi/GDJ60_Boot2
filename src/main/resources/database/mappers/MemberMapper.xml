@@ -21,6 +21,7 @@
   		<id column="USERNAME" property="userName"/>
   		<result column="EMAIL" property="email"/>
   		<result column="PASSWORD" property="password"/>
+  		<result column="NAME" property="name"/>
   		<collection property="roleVOs" javaType="List" ofType="RoleVO">
   			<id column="NUM" property="num"/>
   			<result column="ROLENAME" property="roleName"/>

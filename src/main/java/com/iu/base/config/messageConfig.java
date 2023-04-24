@@ -15,7 +15,7 @@ public class messageConfig implements WebMvcConfigurer {
 	
 	//객체 생성 : annotation, xml -> <bean>
 	@Bean
-	public LocaleResolver getLocale() {
+	public LocaleResolver localeResolver() {
 		//1. session
 		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
 		sessionLocaleResolver.setDefaultLocale(Locale.KOREA);

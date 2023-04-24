@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,19 +38,18 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="./add" method="post" enctype="multipart/form-data">
+                            <form:form id="contactForm" data-sb-form-api-token="API_TOKEN" modelAttribute="boardVO" action="./add" method="post" enctype="multipart/form-data">
                                 <!-- title input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="title" name="title" type="text" placeholder="Enter your title..." data-sb-validations="required" />
+                                    <form:input path="title" id="title" cssClass="form-control"/>
                                     <label for="title">Title</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                                    </div>
-                                    <!-- writer input-->
-                                    <div class="form-floating mb-3">
-                                    <input class="form-control" id="writer" name="writer" type="text" data-sb-validations="required,email" />
+                                	<form:errors path="title"></form:errors>   
+                                </div>
+                                <!-- writer input-->
+                                <div class="form-floating mb-3">
+                                    <form:input path="writer" id="writer" cssClass="form-control"/>
                                     <label for="writer">Writer</label>
-                                    <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    <form:errors path="writer"></form:errors>
                                 </div>
                                
                                 <!-- Message input-->
@@ -60,14 +60,16 @@
                                 </div>
 								<!-- 청부 파일 -->
                                 <div id="fileAdd">
-
+									<input type="file" name="boardFiles">
                                 </div>
 								<div class="form-floating mb-3">
 									<button type="button" id="fileAddBtn">첨부파일 추가</button>
 								</div>
                                 <!-- Submit Button-->
-                                <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="button">Submit</button></div>
-                            </form>
+                                <div class="d-grid">
+                                <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button>
+                                </div>
+                            </form:form>
                         </div>
                     </div>
                 </div>
@@ -100,7 +102,7 @@
     <!-- Footer 적용 -->
 	<c:import url="../temp/footer.jsp"></c:import>
 	<!-- Footer 끝 -->
-	<script type="text/javascript" src="../js/boardform.js"></script>
+	<!-- <script type="text/javascript" src="../js/boardform.js"></script> -->
     <script src="../js/fileManager.js"></script>
 </body>
 </html>
