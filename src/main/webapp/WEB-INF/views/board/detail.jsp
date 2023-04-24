@@ -48,7 +48,12 @@
                             <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
                             <!-- Post content-->
                             <section class="mb-5">
-                            	${boardVO.contents}
+                            	${boardVO.contents}<br>
+                            	<c:if test="${board eq 'qna'}">
+                            		<p>${boardVO.ref}</p>
+                            		<p>${boardVO.step}</p>
+                            		<p>${boardVO.depth}</p>
+                            	</c:if>
                             	<c:forEach items="${boardVO.boardFileVOs}" var="boardFileVO">
 	                            	<img alt="" src="/file/${board}/${boardFileVO.fileName}">
 	                            	<a href="./fileDown?fileNum=${boardFileVO.fileNum}">${boardFileVO.oriName}</a>

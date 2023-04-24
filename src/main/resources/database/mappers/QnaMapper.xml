@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema 추가 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.iu.base.board.qna.QnaDAO">
+  	<sql id="search">
+  		<where>
+  			<if test="kind == 'title'">
+  				TITLE LIKE CONCAT('%', #{search}, '%')
+  			</if>
+  			<if test="kind == 'contents'">
+  				CONTENTS LIKE CONCAT('%', #{search}, '%')
+  			</if>
+  			<if test="kind == 'writer'">
+  				WRITER LIKE CONCAT('%', #{search}, '%')
+  			</if>
+  		</where>
+  	</sql>
+  	
+  	<select id="getTotalCount" parameterType="Pager" resultType="Long">
+  		SELECT COUNT(NUM) FROM QNA
+  		<include refid="search"></include>
+  	</select>
+  
+  	<select id="getList" parameterType="Pager" resultType="QnaVO">
+  		SELECT * FROM QNA
+  		<include refid="search"></include>
+  		ORDER BY NUM DESC
+  		LIMIT #{startRow}, #{perPage}
+  	</select>
+  	
+  	<select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
+  		SELECT * FROM QNA Q
+				 LEFT JOIN
+				 QNAFILES QF
+				 USING(NUM)
+		WHERE NUM=#{num}
+  	</select>
+  	<resultMap type="QnaVO" id="getDetailResult">
+  		<id column="NUM" property="num"/>
+  		<result column="TITLE" property="title"/>
+  		<result column="CONTENTS" property="contents"/>
+  		<result column="WRITER" property="writer"/>
+  		<result column="REGDATE" property="regDate"/>
+  		<result column="HIT" property="hit"/>
+  		<result column="REF" property="ref"/>
+  		<result column="STEP" property="step"/>
+  		<result column="DEPTH" property="depth"/>
+  		<collection property="boardFileVOs" javaType="List" ofType="BoardFileVO">
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="ORINAME" property="oriName"/>
+  		</collection>
+  	</resultMap>
+	
+	<select id="getFileDetail" parameterType="BoardFileVO" resultType="BoardFileVO">
+		SELECT * FROM QNAFILES WHERE FILENUM=#{fileNum}
+	</select>
+	
+  	<insert id="setInsert" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="num">
+  		INSERT INTO QNA (NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT, REF, STEP, DEPTH)
+  		VALUES (#{num}, #{title}, #{contents}, #{writer}, now(), 0, 0, 0, 0)
+  	</insert>
+  	
+  	<update id="setRefUpdate" parameterType="BoardVO">
+  		UPDATE QNA SET REF = #{num}
+  		WHERE NUM=#{num}
+  	</update>
+  	
+  	<insert id="setFileInsert" parameterType="BoardFileVO">
+  		INSERT INTO QNAFILES (NUM, FILENAME, ORINAME)
+  		VALUES (#{num}, #{fileName}, #{oriName})
+  	</insert>
+  	
+  	<update id="setUpdate" parameterType="BoardVO">
+  		UPDATE QNA SET TITLE = #{title}, CONTENTS=#{contents}, WRITER=#{writer}
+  		WHERE NUM=#{num}
+  	</update>
+  	
+  	<delete id="setDelete" parameterType="boardVO">
+  		DELETE FROM QNA WHERE NUM=#{num}
+  	</delete>
+  
+  </mapper>
