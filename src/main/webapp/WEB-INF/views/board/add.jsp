@@ -51,6 +51,33 @@
                                     <label for="writer">Writer</label>
                                     <form:errors path="writer"></form:errors>
                                 </div>
+                                
+                                <div class="form-floating mb-3">
+                                    <form:input path="names" id="writer" cssClass="form-control"/>
+                                    <label for="writer">names</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <form:input path="names" id="writer" cssClass="form-control"/>
+                                    <label for="writer">names</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <form:input path="names" id="writer" cssClass="form-control"/>
+                                    <label for="writer">names</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                    <form:input path="boardFileVOs[0].fileName" id="writer" cssClass="form-control"/>
+                                    <label for="writer">boardFileName</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <form:input path="boardFileVOs[1].fileName" id="writer" cssClass="form-control"/>
+                                    <label for="writer">boardFileName</label>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                    <form:input path="subVO.subName" id="writer" cssClass="form-control"/>
+                                    <label for="writer">SubName</label>
+                                </div>
                                
                                 <!-- Message input-->
                                 <div class="form-floating mb-3">
