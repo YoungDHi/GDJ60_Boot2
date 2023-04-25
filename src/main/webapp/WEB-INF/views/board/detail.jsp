@@ -58,6 +58,12 @@
 	                            	<img alt="" src="/file/${board}/${boardFileVO.fileName}">
 	                            	<a href="./fileDown?fileNum=${boardFileVO.fileNum}">${boardFileVO.oriName}</a>
                             	</c:forEach>
+                            	<div>
+                                   	<form action="./delete" method="POST">
+                                   		<input type="hidden" name="num" value="${boardVO.num}">
+	                                   	<button type="submit">delete</button>
+                                   	</form>
+                                </div>
                             </section>
                         </article>
                         <!-- Comments section-->
