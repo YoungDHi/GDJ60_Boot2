@@ -74,5 +74,9 @@
   	<delete id="setDelete" parameterType="com.iu.base.board.BoardVO">
   		DELETE FROM NOTICE WHERE NUM=#{num}
   	</delete>
+  	
+  	<delete id="setFileDelete" parameterType="BoardFileVO">
+  		DELETE FROM NOTICEFILES WHERE NUM-#{num}
+  	</delete>
   
   </mapper>

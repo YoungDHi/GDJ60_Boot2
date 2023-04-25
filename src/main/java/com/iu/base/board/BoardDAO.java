@@ -30,7 +30,7 @@ public interface BoardDAO {
 	//글삭제
 	public int setDelete(BoardVO boardVO) throws Exception;
 	
-//	//파일삭제
-//	public int setFileDelete(BoardFileVO boardFileVO) throws Exception;
+	//파일삭제
+	public int setFileDelete(BoardFileVO boardFileVO) throws Exception;
 
 }
