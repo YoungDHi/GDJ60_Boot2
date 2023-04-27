@@ -28,6 +28,10 @@
   		</collection>
   	</resultMap>
   	
+  	<update id="setLastTimeUpdate" parameterType="MemberVO">
+  		UPDATE MEMBER SET LASTTIME = now() WHERE USERNAME = #{userName}
+  	</update>
+  	
   	<insert id="setJoin" parameterType="MemberVO">
   		INSERT INTO MEMBER (USERNAME, PASSWORD, NAME, EMAIL, BIRTH, ENABLED)
   		VALUES (#{userName}, #{password}, #{name}, #{email}, #{birth}, #{enabled})
@@ -52,5 +56,38 @@
   		SELECT USERNAME FROM MEMBER
   		WHERE USERNAME=#{userName}
   	</select>
+  	
+  	<select id="getList" resultType="MemberVO">
+  		SELECT * FROM MEMBER
+  	</select>
+  	
+  	<update id="setEnabled">
+  	<![CDATA[
+  		UPDATE MEMBER SET ENABLED=0
+  		WHERE LASTTIME <= now() - INTERVAL 3 day
+  	]]>	
+  	</update>
+  	
+  	<!-- <select id="getLastTime" parameterType="MemberVO" resultType="Integer">
+  		SELECT TIMESTAMPDIFF(day, LASTTIME, NOW()) FROM MEMBER WHERE USERNAME=#{userName}
+  	</select>
+  	
+  	<update id="setEnabledUpdate" parameterType="MemberVO">
+  		UPDATE MEMBER SET ENABLED = 0
+  		WHERE USERNAME = #{userName}
+  	</update> -->
+  	
+  	<select id="getBirth" resultType="MemberVO">
+  		SELECT USERNAME, EMAIL FROM MEMBER
+		WHERE DATE_FORMAT(BIRTH,'%m-%d')=DATE_FORMAT(NOW(), '%m-%d')
+  	</select>
+  	
+  	<!-- <insert id="setBirthUser">
+  		INSERT INTO NOTICE(NUM, TITLE, CONTENTS, WRITER, REGDATE, HIT)
+		VALUES(0, '생일축하합니다',CONCAT(
+			(SELECT GROUP_CONCAT(NAME SEPARATOR',') FROM MEMBER WHERE DATE_FORMAT(BIRTH,'%m-%d')=DATE_FORMAT(NOW(), '%m-%d')),'님 생일 축하합니다'
+			), 
+		'ADMIN', NOW(),0)
+  	</insert> -->
   	
   </mapper>

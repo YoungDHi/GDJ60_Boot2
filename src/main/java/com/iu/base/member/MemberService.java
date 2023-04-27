@@ -61,6 +61,10 @@ public class MemberService {
 		
 	}
 	
+	public int setLastTimeUpdate(MemberVO memberVO) throws Exception {
+		return memberDAO.setLastTimeUpdate(memberVO);
+	}
+	
 	public int setJoin(MemberVO memberVO, RoleVO roleVO) throws Exception {
 		memberVO.setEnabled(true);
 		int result = memberDAO.setJoin(memberVO);
