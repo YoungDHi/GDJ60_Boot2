@@ -41,9 +41,9 @@
                             <form:form id="contactForm" data-sb-form-api-token="API_TOKEN" modelAttribute="memberVO" action="./join" method="post">
                                 <!-- userName input-->
                                 <div class="form-floating mb-3">
-                                    <form:input path="userName" cssClass="form-control" id="userName"/>
-                                    <form:label path="userName">user Name</form:label>
-                                    <form:errors path="userName" cssStyle="color:red;"></form:errors>
+                                    <form:input path="username" cssClass="form-control" id="username"/>
+                                    <form:label path="username">user Name</form:label>
+                                    <form:errors path="username" cssStyle="color:red;"></form:errors>
                                     </div>
                                 <!-- password input-->
                                 <div class="form-floating mb-3">

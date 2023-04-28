@@ -7,7 +7,7 @@
   <mapper namespace="com.iu.base.member.memberDAO">
   
   	<select id="getLogin" parameterType="MemberVO" resultMap="getLoginResult">
-  		SELECT M.*, R.NUM, R.ROLENAME 
+  		SELECT M.USERNAME, M.PASSWORD, M.EMAIL, M.NAME, R.NUM, R.ROLENAME 
   		FROM MEMBER M
 			INNER JOIN
 			MEMBER_ROLE MR
@@ -15,12 +15,12 @@
 			INNER JOIN
 			ROLE R
 			ON MR.NUM = R.NUM
-		WHERE M.USERNAME = #{userName} AND M.PASSWORD = #{password} 
+		WHERE M.USERNAME = #{username}
   	</select>
   	<resultMap type="MemberVO" id="getLoginResult">
-  		<id column="USERNAME" property="userName"/>
-  		<result column="EMAIL" property="email"/>
+  		<id column="USERNAME" property="username"/>
   		<result column="PASSWORD" property="password"/>
+  		<result column="EMAIL" property="email"/>
   		<result column="NAME" property="name"/>
   		<collection property="roleVOs" javaType="List" ofType="RoleVO">
   			<id column="NUM" property="num"/>
@@ -28,18 +28,27 @@
   		</collection>
   	</resultMap>
   	
+  	<select id="getFindPassword" parameterType="MemberVO" resultType="MemberVO">
+  		SELECT USERNAME, EMAIL FROM MEMBER
+  		WHERE USERNAME = #{username} AND EMAIL = #{email}
+  	</select>
+  	
+  	<update id="setPasswordUpdate" parameterType="MemberVO">
+  		UPDATE MEMBER SET PASSWORD = #{password} WHERE USERNAME = #{username}
+  	</update>
+  	
   	<update id="setLastTimeUpdate" parameterType="MemberVO">
   		UPDATE MEMBER SET LASTTIME = now() WHERE USERNAME = #{userName}
   	</update>
   	
   	<insert id="setJoin" parameterType="MemberVO">
-  		INSERT INTO MEMBER (USERNAME, PASSWORD, NAME, EMAIL, BIRTH, ENABLED)
-  		VALUES (#{userName}, #{password}, #{name}, #{email}, #{birth}, #{enabled})
+  		INSERT INTO MEMBER (USERNAME, PASSWORD, NAME, EMAIL, BIRTH, ENABLED, LASTTIME)
+  		VALUES (#{username}, #{password}, #{name}, #{email}, #{birth}, 1, now())
   	</insert>
   	
   	<insert id="setMemberRole" parameterType="Map">
   		INSERT INTO MEMBER_ROLE (USERNAME, NUM)
-  		VALUES (#{userName}, #{num})
+  		VALUES (#{username}, #{num})
   	</insert>
   	
   	<!-- <select id="getRoleNum" parameterType="RoleVO" resultType="Integer">
@@ -54,7 +63,7 @@
   	
   	<select id="idDuplicateCheck" parameterType="MemberVO" resultType="MemberVO">
   		SELECT USERNAME FROM MEMBER
-  		WHERE USERNAME=#{userName}
+  		WHERE USERNAME=#{username}
   	</select>
   	
   	<select id="getList" resultType="MemberVO">
@@ -69,12 +78,12 @@
   	</update>
   	
   	<!-- <select id="getLastTime" parameterType="MemberVO" resultType="Integer">
-  		SELECT TIMESTAMPDIFF(day, LASTTIME, NOW()) FROM MEMBER WHERE USERNAME=#{userName}
+  		SELECT TIMESTAMPDIFF(day, LASTTIME, NOW()) FROM MEMBER WHERE USERNAME=#{username}
   	</select>
   	
   	<update id="setEnabledUpdate" parameterType="MemberVO">
   		UPDATE MEMBER SET ENABLED = 0
-  		WHERE USERNAME = #{userName}
+  		WHERE USERNAME = #{username}
   	</update> -->
   	
   	<select id="getBirth" resultType="MemberVO">

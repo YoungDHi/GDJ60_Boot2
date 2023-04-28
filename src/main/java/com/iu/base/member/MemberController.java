@@ -1,12 +1,15 @@
 package com.iu.base.member;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,23 +29,67 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@GetMapping("login")
-	public ModelAndView getLogin() throws Exception {
+	public ModelAndView getLogin(HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
+		Object obj=session.getAttribute("SPRING_SECURITY_CONTEXT");
+		
+		if(obj==null) {
+			mv.setViewName("member/login");
+		} else {
+			mv.setViewName("redirect:/");
+		}
+		return mv;
+	}
+	
+	@GetMapping("findPassword")
+	public ModelAndView getFindPassword(MemberVO memberVO) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("member/findPassword");
+		return mv;
+	}
+	
+	@PostMapping("findPassword")
+	public ModelAndView getfindPassowrd(@Valid MemberVO memberVO, BindingResult bindingResult) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		boolean check = memberService.getFindPassword(memberVO, bindingResult);
+		if(check) {
+			mv.setViewName("member/findPassword");
+			return mv;
+		}
 		mv.setViewName("member/login");
 		return mv;
 	}
 	
-	@PostMapping("login")
-	public ModelAndView getLogin(MemberVO memberVO, HttpSession session) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		memberVO = memberService.getLogin(memberVO);
-		mv.setViewName("redirect:./login");
-		if(memberVO !=null) {
-			session.setAttribute("member", memberVO);
-			mv.setViewName("redirect:../");
-		}
-		return mv;
+	@GetMapping("info")
+	public void info(HttpSession session) {
+		log.error("============= Login Info===============");
+		//SPRING_SECURITY_CONTEXT
+//		Enumeration<String> names=session.getAttributeNames();
+//		while(names.hasMoreElements()) {
+//			log.error("=========== {} ==========", names.nextElement());
+//		}
+		Object obj=session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
+		Authentication authentication=contextImpl.getAuthentication();
+		log.error("========= {}========", obj);
+		log.error("========= Name : {}========", authentication.getName());
+		log.error("========= Detail : {}========", authentication.getDetails());
+		log.error("========= principal : {}========", authentication.getPrincipal());
 	}
+	
+	
+	
+//	@PostMapping("login")
+//	public ModelAndView getLogin(MemberVO memberVO, HttpSession session) throws Exception {
+//		ModelAndView mv = new ModelAndView();
+//		memberVO = memberService.getLogin(memberVO);
+//		mv.setViewName("redirect:./login");
+//		if(memberVO !=null) {
+//			session.setAttribute("member", memberVO);
+//			mv.setViewName("redirect:../");
+//		}
+//		return mv;
+//	}
 	
 	@GetMapping("logout")
 	public ModelAndView getLogout(HttpSession session) throws Exception {
