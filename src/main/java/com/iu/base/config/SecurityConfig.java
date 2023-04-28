@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.iu.base.security.UserLoginFailHandler;
 import com.iu.base.security.UserLogoutSuccessHandler;
 import com.iu.base.security.UserSuccessHandler;
 
@@ -40,22 +41,23 @@ public class SecurityConfig {
 				.disable()
 			.authorizeRequests()
 				//URL과 권한 매칭
-				.antMatchers("/").permitAll()
-				.antMatchers("/member/join").permitAll()
-				.antMatchers("/member/findPassword").permitAll()
-				.antMatchers("/notice/add").hasRole("ADMIN")
-				.antMatchers("/notice/update").hasRole("ADMIN")
-				.antMatchers("/notice/delete").hasRole("ADMIN")
-				.antMatchers("/notice/*").permitAll()
-				.antMatchers("/qna/add").hasAnyRole("ADMIN","MEMBER","MANAGER")
-				.anyRequest().authenticated()
-//				.anyRequest().permitAll()
+//				.antMatchers("/").permitAll()
+//				.antMatchers("/member/join").permitAll()
+//				.antMatchers("/member/findPassword").permitAll()
+//				.antMatchers("/notice/add").hasRole("ADMIN")
+//				.antMatchers("/notice/update").hasRole("ADMIN")
+//				.antMatchers("/notice/delete").hasRole("ADMIN")
+//				.antMatchers("/notice/*").permitAll()
+//				.antMatchers("/qna/add").hasAnyRole("ADMIN","MEMBER","MANAGER")
+//				.anyRequest().authenticated()
+				.anyRequest().permitAll()
 				.and()
 			.formLogin()
 				.loginPage("/member/login")
 //				.defaultSuccessUrl("/")
 				.successHandler(new UserSuccessHandler())
-				.failureUrl("/member/login")
+//				.failureUrl("/member/login")
+				.failureHandler(new UserLoginFailHandler())
 				.permitAll()
 				.and()
 			.logout()
