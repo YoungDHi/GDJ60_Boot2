@@ -10,6 +10,10 @@ public interface memberDAO {
 	
 	public MemberVO getLogin(MemberVO memberVO) throws Exception;
 	
+	public MemberVO getFindPassword(MemberVO memberVO) throws Exception;
+	
+	public int setPasswordUpdate(MemberVO memberVO) throws Exception;
+	
 	public int setLastTimeUpdate(MemberVO memberVO) throws Exception;
 	
 	public int setJoin(MemberVO memberVO) throws Exception;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,7 @@
                 <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                     <div class="text-center mb-5">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                        <h1 class="fw-bolder">Member Login Page</h1>
+                        <h1 class="fw-bolder">Find Password Page</h1>
                     </div>
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
@@ -36,34 +37,24 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            
-                            <c:if test="${not empty param.errorMessage}">
-                            	<h1>${param.errorMessage}</h1>
-                            </c:if>
-                            
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="./login" method="post">
+                            <form:form id="contactForm" data-sb-form-api-token="API_TOKEN" modelAttribute="memberVO" action="./findPassword" method="post">
                                 <!-- userName input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="username" name="username" value="${cookie.remember.value}" type="text" placeholder="Enter your userName..." data-sb-validations="required" />
-                                    <label for="username">user Name</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                    <form:input path="username" cssClass="form-control" id="username"/>
+                                    <form:label path="username">user Name</form:label>
+                                    <form:errors path="username" cssStyle="color:red;"></form:errors>
                                 </div>
+                                <!-- email input-->
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="password" name="password" type="password" data-sb-validations="required,email" />
-                                    <label for="password">password</label>
+                                	<form:input path="email" cssClass="form-control" id="email"/>
+                                    <form:label path="email">Email</form:label>
+                                    <form:errors path="email" cssStyle="color:red;"></form:errors>
                                 </div>
-                                <!-- password input-->
-                                <div class="form-floating mb-3">
-                                    <input id="remember" name="remember" value="remember" type="checkbox" data-sb-validations="required,email" />
-                                    <label for="remember">ID 기억하기</label>
-                                </div>
-                               
                                <!-- Submit Button-->
                                 <div class="d-grid">
                                 	<button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button>
                                 </div>
-                            </form>
-                            <a href="./findPassword">비밀번호 찾기</a>
+                            </form:form>
                         </div>
                     </div>
                 </div>
@@ -73,8 +64,5 @@
     <!-- Footer 적용 -->
 	<c:import url="../temp/footer.jsp"></c:import>
 	<!-- Footer 끝 -->
-	<script>
-		history.replaceState({}, null, location.pathname)
-	</script>
 </body>
 </html>
