@@ -33,7 +33,7 @@ public class UserLogoutSuccessHandler implements LogoutSuccessHandler {
 			throws IOException, ServletException {
 		log.error("=========== Logout Success Handler ============");
 		
-		response.sendRedirect("https://kauth.kakao.com/oauth/logout?client_id="+restKey+"&logout_redirect_uri=http://localhost/");
+		response.sendRedirect("https://kauth.kakao.com/oauth/logout?client_id="+restKey+"&logout_redirect_uri=http://ec2-54-180-79-207.ap-northeast-2.compute.amazonaws.com/");
 		
 		
 	}
