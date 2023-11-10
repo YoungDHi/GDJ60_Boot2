@@ -90,17 +90,17 @@ public class MemberController {
 		
 		log.error("============= Login Info===============");
 		//SPRING_SECURITY_CONTEXT
-//		Enumeration<String> names=session.getAttributeNames();
-//		while(names.hasMoreElements()) {
-//			log.error("=========== {} ==========", names.nextElement());
-//		}
-//		Object obj=session.getAttribute("SPRING_SECURITY_CONTEXT");
-//		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
-//		Authentication authentication=contextImpl.getAuthentication();
-//		log.error("========= {}========", obj);
-//		log.error("========= Name : {}========", authentication.getName());
-//		log.error("========= Detail : {}========", authentication.getDetails());
-//		log.error("========= principal : {}========", authentication.getPrincipal());
+		Enumeration<String> names=session.getAttributeNames();
+		while(names.hasMoreElements()) {
+			log.error("=========== {} ==========", names.nextElement());
+		}
+		Object obj=session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityContextImpl contextImpl = (SecurityContextImpl)obj;
+		Authentication authentication=contextImpl.getAuthentication();
+		log.error("========= {}========", obj);
+		log.error("========= Name : {}========", authentication.getName());
+		log.error("========= Detail : {}========", authentication.getDetails());
+		log.error("========= principal : {}========", authentication.getPrincipal());
 	}
 	
 	
